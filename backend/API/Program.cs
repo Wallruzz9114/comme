@@ -1,8 +1,13 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using API.Helpers;
+using Data.Contexts;
+using Data.Seed;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -11,7 +16,33 @@ namespace API
 {
     public class Program
     {
-        public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
+        public static async Task Main(string[] args)
+        {
+            var host = CreateHostBuilder(args).Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var serviceProvider = scope.ServiceProvider;
+
+                try
+                {
+                    var databaseContext = serviceProvider.GetRequiredService<DatabaseContext>();
+
+                    await databaseContext.Database.MigrateAsync();
+                    await DataSeeder.SeedAsync(databaseContext);
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(
+                        $"An error occurred while seeding the database " +
+                        $"{exception.Message} {exception.StackTrace} " +
+                        $"{exception.InnerException} {exception.Source}"
+                    );
+                }
+            }
+
+            host.Run();
+        }
 
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>

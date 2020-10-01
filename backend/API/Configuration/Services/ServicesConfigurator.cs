@@ -1,3 +1,5 @@
+using Core.Interfaces;
+using Core.Services;
 using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +18,8 @@ namespace API.Configuration.Services
 
             services.AddDbContext<DatabaseContext>(
                 ob => ob.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IProductService, ProductService>();
 
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" }));
         }

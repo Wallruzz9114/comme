@@ -11,7 +11,7 @@ namespace API.Helpers
             if (logEvent.Level.ToString() != "Information")
             {
                 output.WriteLine("---------------------------------------------------------------------------");
-                output.WriteLine($"Timestamp - { logEvent.Timestamp } | Level - { logEvent.Level } |");
+                output.WriteLine($"Timestamp - { logEvent.Timestamp } | Level - { logEvent.Level }                  |");
                 output.WriteLine("---------------------------------------------------------------------------");
 
                 foreach (var property in logEvent.Properties)
