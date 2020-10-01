@@ -18,7 +18,7 @@ namespace API
             {
                 webBuilder.UseSerilog((hostingContext, loggingConfiguration) => loggingConfiguration
                     .Enrich.FromLogContext()
-                    .Enrich.WithProperty("Application", "c0r3Cm5")
+                    .Enrich.WithProperty("Application", "comme")
                     .Enrich.WithProperty("MachineName", Environment.MachineName)
                     .Enrich.WithProperty("CurrentManagedThreadId", Environment.CurrentManagedThreadId)
                     .Enrich.WithProperty("OSVersion", Environment.OSVersion)

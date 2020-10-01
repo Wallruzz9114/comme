@@ -1,3 +1,5 @@
+using Data.Contexts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -12,9 +14,8 @@ namespace API.Configuration.Services
 
             services.AddCors();
 
-            // services.AddDbContext<DatabaseContext>(ob =>
-            //     ob.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
-            // );
+            services.AddDbContext<DatabaseContext>(
+                ob => ob.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" }));
         }
