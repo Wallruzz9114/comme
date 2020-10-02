@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Errors;
+using API.Helpers;
 using API.ViewModels;
 using AutoMapper;
 using Core.Interfaces;
+using Core.Settings;
 using Core.Specifications;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,12 +33,20 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductViewModel>>> GetProducts()
+        public async Task<ActionResult<Pagination<ProductViewModel>>> GetProducts([FromQuery] ProductSearchParameters productSearchParameters)
         {
-            var includeBrandsAndTypesQuery = new ProductsIncludingTypesAndBrands();
+            var includeBrandsAndTypesQuery = new ProductsIncludingTypesAndBrands(productSearchParameters);
+            var countParameters = new CountedProducts(productSearchParameters);
+            var totalItems = await _productService.CountAsync(countParameters);
             var products = await _productService.ListAllWithSpecificationAsync(includeBrandsAndTypesQuery);
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductViewModel>>(products);
 
-            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductViewModel>>(products));
+            return Ok(new Pagination<ProductViewModel>(
+                productSearchParameters.PageIndex,
+                productSearchParameters.PageSize,
+                totalItems,
+                data
+            ));
         }
 
         [HttpGet("{id}")]

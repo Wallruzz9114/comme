@@ -19,8 +19,6 @@ namespace API.Configuration.Services
         {
             services.AddControllers();
 
-            services.AddCors();
-
             services.AddDbContext<DatabaseContext>(
                 ob => ob.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
@@ -42,6 +40,14 @@ namespace API.Configuration.Services
 
                     return new BadRequestObjectResult(errorResponse);
                 };
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
             });
 
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Comme API", Version = "v1" }));

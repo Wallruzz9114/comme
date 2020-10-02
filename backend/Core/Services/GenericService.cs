@@ -25,6 +25,9 @@ namespace Core.Services
         public async Task<IReadOnlyList<T>> ListAllWithSpecificationAsync(ISpecificationService<T> specification) =>
             await ApplySpecification(specification).ToListAsync();
 
+        public async Task<int> CountAsync(ISpecificationService<T> specification) =>
+            await ApplySpecification(specification).CountAsync();
+
         private IQueryable<T> ApplySpecification(ISpecificationService<T> specification) =>
             SpecificationEvaluator<T>.GetQuery(_databaseContext.Set<T>().AsQueryable(), specification);
     }
