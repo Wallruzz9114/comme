@@ -1,3 +1,5 @@
+using API.Helpers;
+using AutoMapper;
 using Core.Interfaces;
 using Core.Services;
 using Data.Contexts;
@@ -20,6 +22,9 @@ namespace API.Configuration.Services
                 ob => ob.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+
+            services.AddAutoMapper(typeof(MappingProfiles));
 
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" }));
         }
