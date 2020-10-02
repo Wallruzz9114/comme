@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Errors;
 using API.ViewModels;
 using AutoMapper;
 using Core.Interfaces;
 using Core.Specifications;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -38,10 +40,14 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductViewModel>> GetProduct(int id)
         {
             var includeBrandsAndTypesQuery = new ProductsIncludingTypesAndBrands(id);
             var product = await _productService.GetOneWithSpecification(includeBrandsAndTypesQuery);
+
+            if (product == null) return NotFound(new APIResponse(StatusCodes.Status404NotFound));
 
             return _mapper.Map<Product, ProductViewModel>(product);
         }

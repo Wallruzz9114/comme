@@ -1,6 +1,8 @@
 backend/.vscode
 backend/API/bin
 backend/API/obj
+backend/Core/bin
+backend/Core/obj
 backend/API/Logs
 backend/API/Properties
 backend/API/appsettings.Development.json
