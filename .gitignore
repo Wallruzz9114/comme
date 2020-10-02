@@ -16,7 +16,7 @@ backend/Models/obj
 backend/Models/bin
 backend/Makefile
 frontend/ssl
-.angulardoc.json
+frontend/.angulardoc.json
 frontend/.angulardoc.json
 frontend/dist
 frontend/tmp
