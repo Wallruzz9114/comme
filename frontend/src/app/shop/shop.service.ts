@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Product } from '../models/product';
 import { PaginatedProducts } from './../models/paginated-products';
 import { ProductBrand } from './../models/product-brand';
 import { ProductType } from './../models/product-type';
@@ -45,6 +46,10 @@ export class ShopService {
           return response.body;
         })
       );
+  }
+
+  public getProduct(id: number): Observable<Product> {
+    return this.httpClient.get<Product>(this.baseURL + `products/${id}`);
   }
 
   public getProductBrands(): Observable<ProductBrand[]> {
