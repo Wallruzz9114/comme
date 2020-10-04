@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 
 namespace API.Configuration.Services
 {
@@ -20,9 +21,16 @@ namespace API.Configuration.Services
             services.AddControllers();
 
             services.AddDbContext<DatabaseContext>(
-                ob => ob.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+                ob => ob.UseNpgsql(configuration.GetConnectionString("DatabaseConnection")));
+
+            services.AddSingleton<IConnectionMultiplexer>(serviceProvider =>
+            {
+                var configurationOptions = ConfigurationOptions.Parse(configuration.GetConnectionString("RedisConnection"));
+                return ConnectionMultiplexer.Connect(configurationOptions);
+            });
 
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICartService, CartService>();
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
             services.AddAutoMapper(typeof(MappingProfiles));
