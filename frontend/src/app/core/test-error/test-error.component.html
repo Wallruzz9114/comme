@@ -1,0 +1,11 @@
+<div class="container mt-5">
+  <button (click)="this.getServerError()" class="btn btn-outline-primary mr-3">Server (500)</button>
+  <button (click)="this.getNotFoundError()" class="btn btn-outline-primary mr-3">Not Found (404)</button>
+  <button (click)="this.getBadRequestError()" class="btn btn-outline-primary mr-3">Bad Request (400)</button>
+  <button (click)="this.getValidationError()" class="btn btn-outline-primary mr-3">Validation (400)</button>
+  <div *ngIf="this.validationErrors"  class="row mt-5">
+    <ul class="text-danger">
+      <li *ngFor="let error of this.validationErrors">{{ error }}</li>
+    </ul>
+  </div>
+</div>

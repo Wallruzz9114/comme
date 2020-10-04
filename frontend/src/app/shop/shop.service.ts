@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Product } from '../models/product';
+import { environment } from './../../environments/environment';
 import { PaginatedProducts } from './../models/paginated-products';
 import { ProductBrand } from './../models/product-brand';
 import { ProductType } from './../models/product-type';
@@ -13,7 +14,7 @@ import { SearchParameters } from './../models/search-parameters';
   providedIn: 'root',
 })
 export class ShopService {
-  public baseURL = 'https://localhost:5001/api/';
+  public baseURL = environment.apiURL;
 
   constructor(private httpClient: HttpClient) {}
 
