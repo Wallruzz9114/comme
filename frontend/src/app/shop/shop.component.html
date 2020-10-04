@@ -1,35 +1,37 @@
-<div class="container">
+<div class="container mt-3">
   <div class="row">
     <section class="col-3">
-      <select class="custom-select my-3" (change)="this.seletSortType($event.target.value)">
-        <option 
-          *ngFor="let sortType of this.sortTypes"
-          [value]="sortType.value">
-          {{ sortType.name }}
-        </option>
-      </select>
-      <h5 class="text-warning ml-3">Brands</h5>
-      <ul class="list-group my-3">
-        <li
-          *ngFor="let productBrand of this.productBrands"
-          class="list-group-item"
-          [class.active]="productBrand.id == this.searchParameters.brandId"
-          [value]="productBrand.id"
-          (click)="this.selectProductBrand(productBrand.id)">
-          {{ productBrand.name }}
-        </li>
-      </ul>
-      <h5 class="text-warning ml-3">Types</h5>
-      <ul class="list-group my-3">
-        <li
-          *ngFor="let productType of this.productTypes"
-          class="list-group-item"
-          [class.active]="productType.id == this.searchParameters.typeId"
-          [value]="productType.id"
-          (click)="this.selectProductType(productType.id)">
-          {{ productType.name }}
-        </li>
-      </ul>
+      <ng-container *ngIf="this.productBrands && this.productTypes">
+        <select class="custom-select my-3" (change)="this.seletSortType($event.target.value)">
+          <option 
+            *ngFor="let sortType of this.sortTypes"
+            [value]="sortType.value">
+            {{ sortType.name }}
+          </option>
+        </select>
+        <h5 class="text-warning ml-3">Brands</h5>
+        <ul class="list-group my-3">
+          <li
+            *ngFor="let productBrand of this.productBrands"
+            class="list-group-item"
+            [class.active]="productBrand.id == this.searchParameters.brandId"
+            [value]="productBrand.id"
+            (click)="this.selectProductBrand(productBrand.id)">
+            {{ productBrand.name }}
+          </li>
+        </ul>
+        <h5 class="text-warning ml-3">Types</h5>
+        <ul class="list-group my-3">
+          <li
+            *ngFor="let productType of this.productTypes"
+            class="list-group-item"
+            [class.active]="productType.id == this.searchParameters.typeId"
+            [value]="productType.id"
+            (click)="this.selectProductType(productType.id)">
+            {{ productType.name }}
+          </li>
+        </ul>
+      </ng-container>
     </section>
     <section class="col-9">
       <div class="d-flex justify-content-between align-items-center pb-2">
@@ -37,7 +39,7 @@
           [pageIndex]="this.searchParameters.pageIndex"
           [pageSize]="this.searchParameters.pageSize"
           [totalItemsCount]="this.totalItemsCount"></app-pagination-header>
-        <div class="form-inline mt-2">
+        <div *ngIf="this.products"  class="form-inline mt-2">
           <input #search (keyup.enter)="this.inputSearch()" class="form-control search-box mr-2" placeholder="Search" type="text">
           <button (click)="this.inputSearch()" class="btn btn-outline-primary my-2">Search</button>
           <button (click)="this.resetSearch()" class="btn btn-outline-warning ml-2 my-2">Reset</button>
