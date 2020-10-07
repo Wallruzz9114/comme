@@ -9,10 +9,7 @@ namespace API.Controllers
     {
         private readonly DatabaseContext _databaseContext;
 
-        public BugController(DatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        public BugController(DatabaseContext databaseContext) => _databaseContext = databaseContext;
 
         [HttpGet("notfound")]
         public ActionResult GetNotFoundResult()
@@ -26,9 +23,7 @@ namespace API.Controllers
         [HttpGet("servererror")]
         public ActionResult GetServerError()
         {
-            var thing = _databaseContext.Products.Find(56);
-            var thingToReturn = thing.ToString();
-
+            var thing = _databaseContext.Products.Find(56).ToString();
             return Ok();
         }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Data.Contexts;
+using Microsoft.AspNetCore.Identity;
 using Models;
 using Serilog;
 
@@ -56,6 +57,29 @@ namespace Data.Seed
                     $"{exception.Message} {exception.StackTrace} " +
                     $"{exception.InnerException} {exception.Source}"
                 );
+            }
+        }
+
+        public static async Task SeedIdentityAsync(UserManager<AppUser> userManager)
+        {
+            if (!userManager.Users.Any())
+            {
+                var user = new AppUser
+                {
+                    FullName = "Bob",
+                    Email = "bob@email.com",
+                    UserName = "bob@email.com",
+                    Address = new Address
+                    {
+                        Street = "9916 111 St",
+                        City = "Edmonton",
+                        Province = "AB",
+                        PostalCode = "T5H 0C5",
+                        Country = "Canada"
+                    }
+                };
+
+                await userManager.CreateAsync(user, "Pa$$w0rd");
             }
         }
     }

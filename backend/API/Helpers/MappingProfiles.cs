@@ -12,6 +12,8 @@ namespace API.Helpers
                 .ForMember(pwm => pwm.ProductBrand, mce => mce.MapFrom(p => p.ProductBrand.Name))
                 .ForMember(pwm => pwm.ProductType, mce => mce.MapFrom(p => p.ProductType.Name))
                 .ForMember(pwm => pwm.PictureURL, mce => mce.MapFrom<ProductPictureURLResolver>());
+
+            CreateMap<Address, AddressViewModel>().ReverseMap();
         }
     }
 }

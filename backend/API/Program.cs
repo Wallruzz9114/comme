@@ -6,9 +6,11 @@ using API.Helpers;
 using Data.Contexts;
 using Data.Seed;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Models;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
@@ -27,9 +29,13 @@ namespace API
                 try
                 {
                     var databaseContext = serviceProvider.GetRequiredService<DatabaseContext>();
+                    var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+                    var identityContext = serviceProvider.GetRequiredService<IdentityContext>();
 
                     await databaseContext.Database.MigrateAsync();
                     await DataSeeder.SeedAsync(databaseContext);
+                    await identityContext.Database.MigrateAsync();
+                    await DataSeeder.SeedIdentityAsync(userManager);
                 }
                 catch (Exception exception)
                 {
