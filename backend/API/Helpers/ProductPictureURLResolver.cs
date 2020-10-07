@@ -1,4 +1,4 @@
-using API.ViewModels;
+using Core.ViewModels;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Models;

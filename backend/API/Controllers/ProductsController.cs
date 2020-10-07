@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Errors;
 using API.Helpers;
-using API.ViewModels;
+using Core.ViewModels;
 using AutoMapper;
 using Core.Interfaces;
 using Core.Settings;

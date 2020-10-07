@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using API.Errors;
 using API.Extensions;
-using API.ViewModels;
+using Core.ViewModels;
 using AutoMapper;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -53,6 +53,11 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<AppUserViewModel>> Register(RegisterRequestViewModel registerRequestViewModel)
         {
+            if (UserExists(registerRequestViewModel.Email).Result.Value)
+                return new BadRequestObjectResult(
+                    new APIValidationErrorResponse { Errors = new[] { "Email already in use" } }
+                );
+
             var appUser = new AppUser
             {
                 FullName = registerRequestViewModel.FullName,

@@ -1,4 +1,4 @@
-using API.ViewModels;
+using Core.ViewModels;
 using AutoMapper;
 using Models;
 
@@ -14,6 +14,8 @@ namespace API.Helpers
                 .ForMember(pwm => pwm.PictureURL, mce => mce.MapFrom<ProductPictureURLResolver>());
 
             CreateMap<Address, AddressViewModel>().ReverseMap();
+            CreateMap<CartViewModel, Cart>();
+            CreateMap<CartItemViewModel, CartItem>();
         }
     }
 }
