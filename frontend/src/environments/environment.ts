@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  apiURL: 'https://localhost:5001/api/',
+  backendURL: 'https://localhost:5001/api/',
   cartId: 'cart_id',
+  token: 'token',
 };
 
 /*

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { environment } from './../environments/environment';
+import { AccountService } from './account/account.service';
 import { CartService } from './cart/cart.service';
 
 @Component({
@@ -9,9 +10,14 @@ import { CartService } from './cart/cart.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private accountService: AccountService) {}
 
   public ngOnInit(): void {
+    this.getCart();
+    this.getUser();
+  }
+
+  public getCart(): void {
     const cartId = localStorage.getItem(environment.cartId);
 
     if (cartId) {
@@ -20,5 +26,13 @@ export class AppComponent implements OnInit {
         (error) => console.log(error)
       );
     }
+  }
+
+  public getUser(): void {
+    const token = localStorage.getItem(environment.token);
+    this.accountService.loadCurrentUser(token).subscribe(
+      () => console.log('Loaded user'),
+      (error) => console.log(error)
+    );
   }
 }

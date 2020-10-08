@@ -10,7 +10,9 @@ export class LoadingInterceptor implements HttpInterceptor {
   constructor(private busyService: BusyService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.busyService.setBusy();
+    if (!req.url.includes('exists')) {
+      this.busyService.setBusy();
+    }
     return next.handle(req).pipe(
       delay(1000),
       finalize(() => this.busyService.setIdle())

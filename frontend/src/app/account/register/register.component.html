@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-center mt-5">
+  <div class="col-3">
+    <form [formGroup]="this.registerForm" (ngSubmit)="this.submit()">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+      </div>
+      <app-text-input formControlName="fullName" [label]="'Full Name'"></app-text-input>
+      <app-text-input formControlName="email" [label]="'Email'"></app-text-input>
+      <app-text-input formControlName="password" [label]="'Password'" [type]="'password'"></app-text-input>
+      <ul *ngIf="this.errors" class="text-danger list-unstyled">
+        <li *ngFor="let error of this.errors">{{ error }}</li>
+      </ul>
+      <button
+        class="btn btn-lg btn-warning btn-block"
+        type="submit">Register
+      </button>
+    </form>
+  </div>
+</div>

@@ -16,7 +16,7 @@ export class CartService {
   private cartSource = new BehaviorSubject<Cart>(null);
   private cartSummarySource = new BehaviorSubject<CartSummary>(null);
 
-  public baseURL = environment.apiURL;
+  public baseURL = environment.backendURL;
   public cart$ = this.cartSource.asObservable();
   public cartSummary$ = this.cartSummarySource.asObservable();
 

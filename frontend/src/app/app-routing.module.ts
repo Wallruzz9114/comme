@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthenticationGuard } from './core/guards/authentication.guard';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
@@ -23,10 +24,17 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
+    canActivate: [AuthenticationGuard],
     loadChildren: () =>
       import('./checkout/checkout.module').then((module) => module.CheckoutModule),
     data: { breadcrumb: 'Checkout' },
   },
+  {
+    path: 'account',
+    loadChildren: () => import('./account/account.module').then((module) => module.AccountModule),
+    data: { breadcrumb: { skip: true } },
+  },
+
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];
 

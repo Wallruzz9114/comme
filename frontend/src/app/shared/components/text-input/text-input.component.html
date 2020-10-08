@@ -1,0 +1,41 @@
+<div class="form-label-group">
+  <input
+    #input
+    [ngClass]="(
+      this.controlDirective &&
+      this.controlDirective.control &&
+      this.controlDirective.control.touched
+    ) ? !this.controlDirective.control.valid ? 'is-invalid' : 'is-valid' : null"
+    [type]="type"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+    id="{{ this.label }}" 
+    class="form-control" 
+    placeholder="{{ this.label }}">
+    <div
+      *ngIf="
+        this.controlDirective &&
+        this.controlDirective.control &&
+        this.controlDirective.control.status === 'PENDING'"
+        class="fa fa-spinner fa-spin loader">
+      </div>
+  <label for="{{ this.label }}">{{ this.label }}</label>
+  <div
+    *ngIf="
+      this.controlDirective &&
+      this.controlDirective.control &&
+      !this.controlDirective.control.valid &&
+      this.controlDirective.control.touched"
+    class="invalid-feedback">
+    <span *ngIf="this.controlDirective.control.errors?.required">{{ this.label }} is required</span>
+    <span *ngIf="this.controlDirective.control.errors?.pattern">Invalid email address</span>
+  </div>
+  <div *ngIf="
+    this.controlDirective &&
+    this.controlDirective.control &&
+    !this.controlDirective.control.valid &&
+    this.controlDirective.control.dirty"
+    class="invalid-feedback d-block">
+    <span *ngIf="this.controlDirective.control.errors?.emailExists">Email address is in use</span>
+</div>
+</div>

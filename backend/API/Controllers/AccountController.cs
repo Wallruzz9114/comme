@@ -92,8 +92,11 @@ namespace API.Controllers
         }
 
         [HttpGet("exists")]
-        public async Task<ActionResult<bool>> UserExists([FromQuery] string email) =>
-            await _userManager.FindByEmailAsync(email) != null;
+        public async Task<ActionResult<bool>> UserExists([FromQuery] string email)
+        {
+            var result = await _userManager.FindByEmailAsync(email) != null;
+            return result;
+        }
 
         [Authorize]
         [HttpGet("address")]
