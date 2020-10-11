@@ -11,11 +11,7 @@ namespace API.Helpers
 
         public ProductPictureURLResolver(IConfiguration configuration) => _configuration = configuration;
 
-        public string Resolve(
-            Product source,
-            ProductViewModel destination,
-            string destMember,
-            ResolutionContext context)
+        public string Resolve(Product source, ProductViewModel destination, string destMember, ResolutionContext context)
         {
             if (!string.IsNullOrEmpty(source.PictureURL))
                 return _configuration["ApiURL"] + source.PictureURL;

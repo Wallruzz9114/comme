@@ -34,7 +34,7 @@ namespace Core.Specifications
             Paginate(parameters.PageSize * (parameters.PageIndex - 1), parameters.PageSize);
         }
 
-        public ProductsIncludingTypesAndBrands(int id) : base(product => product.Id == id)
+        public ProductsIncludingTypesAndBrands(int productId) : base(product => product.Id == productId)
         {
             AddInclude(product => product.ProductType);
             AddInclude(product => product.ProductBrand);

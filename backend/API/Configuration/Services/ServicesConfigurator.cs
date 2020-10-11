@@ -26,11 +26,9 @@ namespace API.Configuration.Services
         {
             services.AddControllers();
 
-            services.AddDbContext<DatabaseContext>(
-                ob => ob.UseNpgsql(configuration.GetConnectionString("DatabaseConnection")));
+            services.AddDbContext<DatabaseContext>(ob => ob.UseNpgsql(configuration.GetConnectionString("DatabaseConnection")));
 
-            services.AddDbContext<IdentityContext>(
-                ob => ob.UseNpgsql(configuration.GetConnectionString("IdentityConnection")));
+            services.AddDbContext<IdentityContext>(ob => ob.UseNpgsql(configuration.GetConnectionString("IdentityConnection")));
 
             services.AddSingleton<IConnectionMultiplexer>(serviceProvider =>
             {
@@ -59,6 +57,8 @@ namespace API.Configuration.Services
             services.AddScoped<ICartService, CartService>();
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             services.AddScoped<IJWTTokenService, JWTTokenService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAutoMapper(typeof(MappingProfiles));
 

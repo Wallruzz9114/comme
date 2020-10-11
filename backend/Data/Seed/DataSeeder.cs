@@ -49,6 +49,17 @@ namespace Data.Seed
 
                     await databaseContext.SaveChangesAsync();
                 }
+
+                if (!databaseContext.DeliveryMethods.Any())
+                {
+                    var deliveryMethodsStringData = File.ReadAllText("../Data/Seed/json/delivery.json");
+                    var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryMethodsStringData);
+
+                    foreach (var deliveryMethod in deliveryMethods)
+                        databaseContext.DeliveryMethods.Add(deliveryMethod);
+
+                    await databaseContext.SaveChangesAsync();
+                }
             }
             catch (Exception exception)
             {

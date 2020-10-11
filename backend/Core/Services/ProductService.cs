@@ -16,11 +16,11 @@ namespace Core.Services
         public async Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync() =>
             await _databaseContext.ProductBrands.ToListAsync();
 
-        public async Task<Product> GetProductByIdAsync(int id) =>
+        public async Task<Product> GetProductByIdAsync(int productId) =>
             await _databaseContext.Products
                 .Include(product => product.ProductType)
                 .Include(product => product.ProductBrand)
-                .FirstOrDefaultAsync(product => product.Id == id);
+                .FirstOrDefaultAsync(product => product.Id == productId);
 
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
         {
