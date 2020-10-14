@@ -5,13 +5,14 @@ import { Observable, of, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment';
+import { Address } from './../models/address';
 import { User } from './../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  public baseURL = environment.backendURL;
+  private baseURL = environment.backendURL;
   private currentUserSource = new ReplaySubject<User>(1);
   public currentUser$ = this.currentUserSource.asObservable();
 
@@ -56,13 +57,23 @@ export class AccountService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${token}`);
 
-    return this.httpClient.get(this.baseURL + 'account/get', { headers }).pipe(
-      map((user: User) => {
-        if (user) {
-          localStorage.setItem(environment.token, user.token);
-          this.currentUserSource.next(user);
-        }
-      })
-    );
+    return this.httpClient
+      .get<User>(this.baseURL + 'account/get', { headers })
+      .pipe(
+        map((user: User) => {
+          if (user) {
+            localStorage.setItem(environment.token, user.token);
+            this.currentUserSource.next(user);
+          }
+        })
+      );
+  }
+
+  public getUserAddress(): Observable<Address> {
+    return this.httpClient.get<Address>(this.baseURL + 'account/address');
+  }
+
+  public updateUserAddress(address: Address): Observable<Address> {
+    return this.httpClient.put<Address>(this.baseURL + 'account/update', address);
   }
 }

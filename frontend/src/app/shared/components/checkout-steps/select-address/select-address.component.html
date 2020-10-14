@@ -1,0 +1,35 @@
+<div [formGroup]="this.checkoutForm" class="mt-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h4>Shipping Address</h4>
+    <button
+      [disabled]="!this.checkoutForm.get('addressForm').valid || !this.checkoutForm.get('addressForm').dirty"
+      (click)="this.updateUserAddress()"
+      class="btn btn-outline-success mb-4">Update Address</button>
+  </div>
+  <div formGroupName="addressForm" class="row">
+    <div class="form-goup col-6">
+      <app-text-input [label]="'Street'" formControlName="street"></app-text-input>
+    </div>
+    <div class="form-goup col-6">
+      <app-text-input [label]="'City'" formControlName="city"></app-text-input>
+    </div>
+    <div class="form-goup col-6">
+      <app-text-input [label]="'Province'" formControlName="province"></app-text-input>
+    </div>
+    <div class="form-goup col-6">
+      <app-text-input [label]="'Postal Code'" formControlName="postalCode"></app-text-input>
+    </div>
+    <div class="form-goup col-12">
+      <app-text-input [label]="'Country'" formControlName="country"></app-text-input>
+    </div>
+  </div>
+</div>
+
+<div class="float-none d-flex justify-content-between flex-column flex-lg-row mb-5">
+  <button [routerLink]="['/cart']" class="btn btn-outline-primary">
+    <i class="fa fa-angle-left"></i> Back to Cart
+  </button>
+  <button class="btn btn-outline-primary" cdkStepperNext>
+    Delivery <i class="fa fa-angle-right"></i>
+  </button>
+</div>

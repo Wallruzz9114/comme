@@ -10,7 +10,7 @@
       <i class="fa fa-shopping-cart fa-2x mr-5 text-dark"></i>
       <div *ngIf="(this.cart$ | async) as cart" class="cart-no">{{ cart.cartItems.length }}</div>
     </a>
-    <ng-container *ngIf="(this.currentUser$ | async) === null">
+    <ng-container  *ngIf="(this.currentUser$ | async) === null">
       <a [routerLink]="['/account/login']" class="btn btn-outline-secondary mr-2">Log In</a>
       <a [routerLink]="['/account/register']" class="btn btn-outline-secondary mr-3">Register</a>
     </ng-container>

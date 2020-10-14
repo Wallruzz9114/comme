@@ -1,0 +1,13 @@
+<div class="container">
+  <ul class="nav nav-pills nav-justified">
+    <li *ngFor="let step of steps; let i = index" class="nav-item">
+      <button
+        [class.active]="this.selectedIndex === i"
+        (click)="this.goToStep(i)"
+        class="nav-link py-3 text-uppercase font-weight-bold btn-block">{{ step.label }}</button>
+    </li>
+  </ul>
+  <div>
+    <ng-container [ngTemplateOutlet]="this.selected.content"></ng-container>
+  </div>
+</div>

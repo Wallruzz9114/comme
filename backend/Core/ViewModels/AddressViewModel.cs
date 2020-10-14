@@ -18,8 +18,5 @@ namespace Core.ViewModels
 
         [Required]
         public string Country { get; set; }
-
-        [Required]
-        public string AppUserId { get; set; }
     }
 }

@@ -18,15 +18,17 @@ namespace Core.Services
         {
             if (_services == null) _services = new Hashtable();
 
-            if (!_services.ContainsKey(typeof(T).Name))
+            var type = typeof(T);
+
+            if (!_services.ContainsKey(type.Name))
             {
                 var serviceType = typeof(GenericService<>);
-                var serviceInstance = Activator.CreateInstance(serviceType.MakeGenericType(typeof(T)), _databaseContext);
+                var serviceInstance = Activator.CreateInstance(serviceType.MakeGenericType(type), _databaseContext);
 
-                _services.Add(serviceType, serviceInstance);
+                _services.Add(type.Name, serviceInstance);
             }
 
-            return (IGenericService<T>)_services[typeof(T).Name];
+            return (IGenericService<T>)_services[type.Name];
         }
 
         public async Task<int> Save() => await _databaseContext.SaveChangesAsync();

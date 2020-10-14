@@ -16,16 +16,12 @@ namespace API.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IJWTTokenService _jwtTokenService;
+        private readonly IJWTService _jwtService;
         private readonly IMapper _mapper;
 
-        public AccountController(
-            UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager,
-            IJWTTokenService jwtTokenService,
-            IMapper mapper)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJWTService jwtService, IMapper mapper)
         {
-            _jwtTokenService = jwtTokenService;
+            _jwtService = jwtService;
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
@@ -46,7 +42,7 @@ namespace API.Controllers
             {
                 FullName = appUser.FullName,
                 Email = appUser.Email,
-                Token = _jwtTokenService.CreateToken(appUser)
+                Token = _jwtService.CreateToken(appUser)
             };
         }
 
@@ -73,7 +69,7 @@ namespace API.Controllers
             {
                 FullName = appUser.FullName,
                 Email = appUser.Email,
-                Token = _jwtTokenService.CreateToken(appUser)
+                Token = _jwtService.CreateToken(appUser)
             };
         }
 
@@ -86,7 +82,7 @@ namespace API.Controllers
             return new AppUserViewModel
             {
                 Email = appUser.Email,
-                Token = _jwtTokenService.CreateToken(appUser),
+                Token = _jwtService.CreateToken(appUser),
                 FullName = appUser.FullName
             };
         }
@@ -103,7 +99,8 @@ namespace API.Controllers
         public async Task<ActionResult<AddressViewModel>> GetUserAddress()
         {
             var appUser = await _userManager.FindUserByCaimPrincipalWithAddressAsync(HttpContext.User);
-            return _mapper.Map<Address, AddressViewModel>(appUser.Address);
+            var address = _mapper.Map<Address, AddressViewModel>(appUser.Address);
+            return address;
         }
 
         [Authorize]

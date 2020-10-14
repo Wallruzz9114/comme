@@ -10,12 +10,12 @@ using Models;
 
 namespace Middleware.Services
 {
-    public class JWTTokenService : IJWTTokenService
+    public class JWTService : IJWTService
     {
         private readonly IConfiguration _configuration;
         private readonly SymmetricSecurityKey _symetricSecurityKey;
 
-        public JWTTokenService(IConfiguration configuration)
+        public JWTService(IConfiguration configuration)
         {
             _configuration = configuration;
             _symetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Token:Key"]));

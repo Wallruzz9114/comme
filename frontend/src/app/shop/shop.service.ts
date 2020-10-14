@@ -14,7 +14,7 @@ import { SearchParameters } from './../models/search-parameters';
   providedIn: 'root',
 })
 export class ShopService {
-  public baseURL = environment.backendURL;
+  private baseURL = environment.backendURL;
 
   constructor(private httpClient: HttpClient) {}
 

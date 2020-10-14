@@ -4,5 +4,4 @@ export interface Address {
   province: string;
   postalCode: string;
   country: string;
-  appUserId: string;
 }

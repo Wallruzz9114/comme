@@ -7,6 +7,7 @@ import { environment } from './../../environments/environment';
 import { Cart, CustomerCart } from './../models/cart';
 import { CartItem } from './../models/cart-item';
 import { CartSummary } from './../models/cart-summary';
+import { DeliveryMethod } from './../models/delivery-method';
 import { Product } from './../models/product';
 
 @Injectable({
@@ -16,9 +17,10 @@ export class CartService {
   private cartSource = new BehaviorSubject<Cart>(null);
   private cartSummarySource = new BehaviorSubject<CartSummary>(null);
 
-  public baseURL = environment.backendURL;
+  private baseURL = environment.backendURL;
   public cart$ = this.cartSource.asObservable();
   public cartSummary$ = this.cartSummarySource.asObservable();
+  public shippingPrice: number = 0;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -98,9 +100,21 @@ export class CartService {
     );
   }
 
+  public emptyCartLocally(): void {
+    this.cartSource.next(null);
+    this.cartSummarySource.next(null);
+
+    localStorage.removeItem(environment.cartId);
+  }
+
+  public setShippingPrice(deliveryMethod: DeliveryMethod): void {
+    this.shippingPrice = deliveryMethod.price;
+    this.processCartSummary();
+  }
+
   private processCartSummary(): void {
     const cart: Cart = this.getCurrentCart();
-    const shippingCost = 0;
+    const shippingCost = this.shippingPrice;
     const subTotal = cart.cartItems.reduce((total, item) => item.price * item.quantity + total, 0);
     const total = subTotal + shippingCost;
 

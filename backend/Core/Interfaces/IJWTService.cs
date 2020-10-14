@@ -2,7 +2,7 @@ using Models;
 
 namespace Core.Interfaces
 {
-    public interface IJWTTokenService
+    public interface IJWTService
     {
         string CreateToken(AppUser appUser);
     }

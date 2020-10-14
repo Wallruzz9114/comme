@@ -9,7 +9,7 @@ import { environment } from './../../../environments/environment';
   styleUrls: ['./test-error.component.scss'],
 })
 export class TestErrorComponent implements OnInit {
-  public baseURL = environment.backendURL;
+  private baseURL = environment.backendURL;
   public validationErrors: any;
 
   constructor(private httpClient: HttpClient) {}

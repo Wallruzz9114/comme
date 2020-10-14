@@ -56,7 +56,7 @@ namespace API.Configuration.Services
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
-            services.AddScoped<IJWTTokenService, JWTTokenService>();
+            services.AddScoped<IJWTService, JWTService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
