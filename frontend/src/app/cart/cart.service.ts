@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class CartService {
   private baseURL = environment.backendURL;
   public cart$ = this.cartSource.asObservable();
   public cartSummary$ = this.cartSummarySource.asObservable();
-  public shippingPrice: number = 0;
+  public shippingPrice = 0;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -47,7 +47,7 @@ export class CartService {
     return this.cartSource.value;
   }
 
-  public addItemToCart(product: Product, quantity = 1) {
+  public addItemToCart(product: Product, quantity = 1): void {
     const cartItem: CartItem = this.getItemFromProduct(product, quantity);
     const cart: Cart = this.getCurrentCart() ?? this.addNewCart();
 
@@ -96,7 +96,7 @@ export class CartService {
         this.cartSummarySource.next(null);
         localStorage.removeItem(environment.cartId);
       },
-      (error: any) => console.log(error)
+      (error: HttpErrorResponse) => console.log(error)
     );
   }
 

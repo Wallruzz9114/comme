@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { PaginatedProducts } from './../models/paginated-products';
@@ -46,7 +47,7 @@ export class ShopComponent implements OnInit {
         this.searchParameters.pageSize = paginatedProducts.pageSize;
         this.totalItemsCount = paginatedProducts.count;
       },
-      (error: any) => console.log(error)
+      (error: HttpErrorResponse) => console.log(error)
     );
   }
 
@@ -54,7 +55,7 @@ export class ShopComponent implements OnInit {
     this.shopService.getProductBrands().subscribe(
       (productBrands: ProductBrand[]) =>
         (this.productBrands = [{ id: 0, name: 'All' }, ...productBrands]),
-      (error: any) => console.log(error)
+      (error: HttpErrorResponse) => console.log(error)
     );
   }
 
@@ -62,7 +63,7 @@ export class ShopComponent implements OnInit {
     this.shopService.getProductTypes().subscribe(
       (productTypes: ProductType[]) =>
         (this.productTypes = [{ id: 0, name: 'All' }, ...productTypes]),
-      (error: any) => console.log(error)
+      (error: HttpErrorResponse) => console.log(error)
     );
   }
 
@@ -83,20 +84,20 @@ export class ShopComponent implements OnInit {
     this.getProducts();
   }
 
-  public setPageNumber(pageNumber: number) {
+  public setPageNumber(pageNumber: number): void {
     if (this.searchParameters.pageIndex !== pageNumber) {
       this.searchParameters.pageIndex = pageNumber;
       this.getProducts();
     }
   }
 
-  public inputSearch() {
+  public inputSearch(): void {
     this.searchParameters.search = this.searchTerm.nativeElement.value;
     this.searchParameters.pageIndex = 1;
     this.getProducts();
   }
 
-  public resetSearch() {
+  public resetSearch(): void {
     this.searchTerm.nativeElement.value = '';
     this.searchParameters = new SearchParameters();
     this.getProducts();

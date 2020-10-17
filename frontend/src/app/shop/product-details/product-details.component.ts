@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -46,7 +47,7 @@ export class ProductDetailsComponent implements OnInit {
         this.product = product;
         this.breadcrumbService.set('@productDetails', product.name);
       },
-      (error: any) => console.log(error)
+      (error: HttpErrorResponse) => console.log(error)
     );
   }
 }

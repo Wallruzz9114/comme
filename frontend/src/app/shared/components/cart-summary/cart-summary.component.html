@@ -1,7 +1,7 @@
-<ng-container *ngIf="this.cart$ | async">
+<ng-container *ngIf="this.cartItems.length > 0">
   <div class="table-responsive">
-    <table class="table">
-      <thead>
+    <table class="table table-borderless">
+      <thead [class.thead-light]="!this.isCheckoutPage || this.isOrder" class="border-0 py-2">
         <tr>
           <th class="border-0" [class.bg-light]="!this.isCheckoutPage" scope="col"><div class="p-2 px-3 text-uppercase">Products</div></th>
           <th class="border-0 text-center" [class.bg-light]="!this.isCheckoutPage" scope="col"><div class="py-2 text-uppercase">Price</div></th>
@@ -11,13 +11,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let cartItem of (this.cart$ | async).cartItems">
+        <tr *ngFor="let cartItem of this.cartItems">
           <th scope="row">
             <div class="p-2">
               <img src="{{ cartItem.pictureURL }}" alt="{{ cartItem.name }}" class="img-fluid product-img">
               <div class="ml-3 d-lg-inline-block align-middle">
-                <h5 class="mb-0"> <a routerLink="/shop/{{ cartItem.id }}" class="text-dark">{{ cartItem.name }}</a></h5>
-                <span class="text-muted font-weight-normal font-italic d-block">Type: {{ cartItem.productType }}</span>
+                <h5 class="mb-0"> <a [routerLink]="['/shop', cartItem.id || cartItem.productId]" class="text-dark">{{ cartItem.name || cartItem.productName }}</a></h5>
+                <span *ngIf="cartItem.productType" class="text-muted font-weight-normal font-italic d-block">Type: {{ cartItem.productType }}</span>
               </div>
             </div>
           </th>

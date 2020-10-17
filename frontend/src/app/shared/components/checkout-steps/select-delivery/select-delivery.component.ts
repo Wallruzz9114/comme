@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -23,7 +24,7 @@ export class SelectDeliveryComponent implements OnInit {
   public getDeliveryMethods(): void {
     this.checkoutService.getDeliveryMethods().subscribe(
       (deliveryMothods: DeliveryMethod[]) => (this.allDeliveryMethods = deliveryMothods),
-      (error: any) => console.log(error)
+      (error: HttpErrorResponse) => console.log(error)
     );
   }
 

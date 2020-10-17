@@ -1,8 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { CartService } from './../../../cart/cart.service';
-import { CartSummary } from './../../../models/cart-summary';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-order-totals',
@@ -10,11 +6,11 @@ import { CartSummary } from './../../../models/cart-summary';
   styleUrls: ['./order-totals.component.scss'],
 })
 export class OrderTotalsComponent implements OnInit {
-  public cartSummary$: Observable<CartSummary>;
+  @Input() shippingCost: number;
+  @Input() subTotal: number;
+  @Input() total: number;
 
-  constructor(private cartService: CartService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.cartSummary$ = this.cartService.cartSummary$;
-  }
+  ngOnInit(): void {}
 }

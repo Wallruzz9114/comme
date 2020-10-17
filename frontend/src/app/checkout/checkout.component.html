@@ -17,7 +17,11 @@
       </app-checkout-steps>
     </div>
     <div class="col-4">
-      <app-order-totals></app-order-totals>
+      <app-order-totals *ngIf="(this.cartSummary$ | async) as cartSummary"
+        [shippingCost]="cartSummary.shippingCost"
+        [subTotal]="cartSummary.subTotal"
+        [total]="cartSummary.total">
+      </app-order-totals>
     </div>
   </div>
 </div>

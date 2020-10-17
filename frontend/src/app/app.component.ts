@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { environment } from './../environments/environment';
@@ -23,7 +24,7 @@ export class AppComponent implements OnInit {
     if (cartId) {
       this.cartService.getCart(cartId).subscribe(
         () => console.log('Initialized cart'),
-        (error) => console.log(error)
+        (error: HttpErrorResponse) => console.log(error)
       );
     }
   }
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
     const token = localStorage.getItem(environment.token);
     this.accountService.loadCurrentUser(token).subscribe(
       () => console.log('Loaded user'),
-      (error) => console.log(error)
+      (error: HttpErrorResponse) => console.log(error)
     );
   }
 }

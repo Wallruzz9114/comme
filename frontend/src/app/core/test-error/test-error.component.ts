@@ -16,28 +16,28 @@ export class TestErrorComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public getNotFoundError() {
+  public getNotFoundError(): void {
     this.httpClient.get(this.baseURL + 'products/50').subscribe(
       (response) => console.log(response),
       (error) => console.log(error)
     );
   }
 
-  public getServerError() {
+  public getServerError(): void {
     this.httpClient.get(this.baseURL + 'bug/servererror').subscribe(
       (response) => console.log(response),
       (error) => console.log(error)
     );
   }
 
-  public getBadRequestError() {
+  public getBadRequestError(): void {
     this.httpClient.get(this.baseURL + 'bug/badrequest').subscribe(
       (response) => console.log(response),
       (error) => console.log(error)
     );
   }
 
-  public getValidationError() {
+  public getValidationError(): void {
     this.httpClient.get(this.baseURL + 'products/fortytwo').subscribe(
       (response) => console.log(response),
       (error) => {

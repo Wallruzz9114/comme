@@ -4,6 +4,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 
 import { Cart } from '../models/cart';
 import { CartItem } from './../models/cart-item';
+import { CartTotals } from './../models/cart-totals';
 import { CartService } from './cart.service';
 
 @Component({
@@ -13,12 +14,14 @@ import { CartService } from './cart.service';
 })
 export class CartComponent implements OnInit {
   public cart$: Observable<Cart>;
+  public cartSummary$: Observable<CartTotals>;
   public breadcrumb$: Observable<any[]>;
 
   constructor(private cartService: CartService, private breadcrumbService: BreadcrumbService) {}
 
   ngOnInit(): void {
     this.cart$ = this.cartService.cart$;
+    this.cartSummary$ = this.cartService.cartSummary$;
     this.breadcrumb$ = this.breadcrumbService.breadcrumbs$;
   }
 

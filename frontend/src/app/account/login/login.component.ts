@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
   public submit(): void {
     this.accountService.login(this.loginForm.value).subscribe(
       () => this.router.navigateByUrl(this.returnUrl),
-      (error) => console.log(error)
+      (error: HttpErrorResponse) => console.log(error)
     );
   }
 }
