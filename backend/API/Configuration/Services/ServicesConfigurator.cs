@@ -25,11 +25,8 @@ namespace API.Configuration.Services
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
-
             services.AddDbContext<DatabaseContext>(ob => ob.UseNpgsql(configuration.GetConnectionString("DatabaseConnection")));
-
             services.AddDbContext<IdentityContext>(ob => ob.UseNpgsql(configuration.GetConnectionString("IdentityConnection")));
-
             services.AddSingleton<IConnectionMultiplexer>(serviceProvider =>
             {
                 var configurationOptions = ConfigurationOptions.Parse(configuration.GetConnectionString("RedisConnection"));
